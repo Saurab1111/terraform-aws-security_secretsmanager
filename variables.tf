@@ -6,14 +6,8 @@ variable "name" {
 
 variable "description" {
   type        = string
-  description = "Description of the secret"
-  default     = "Managed by Terraform"
-}
-
-variable "recovery_window_in_days" {
-  type        = number
-  description = "Number of days that Secrets Manager waits before deleting the secret"
-  default     = 7
+  description = "Description for the secret"
+  default     = "Managed secret for application credentials"
 }
 
 variable "kms_key_id" {
@@ -22,9 +16,15 @@ variable "kms_key_id" {
   default     = ""
 }
 
+variable "recovery_window_in_days" {
+  type        = number
+  description = "Number of days before permanent deletion of the secret"
+  default     = 7
+}
+
 variable "secret_string" {
   type        = string
-  description = "Plaintext secret value stored in the current version"
+  description = "Plaintext secret value stored in Secrets Manager"
   default     = "change-me"
 }
 
@@ -36,8 +36,9 @@ variable "secret_binary" {
 
 variable "tags" {
   type        = map(string)
-  description = "Tags applied to the secret"
+  description = "Tags applied to the secret resources"
   default = {
-    managed_by = "terraform"
+    Environment = "production"
+    ManagedBy   = "terraform"
   }
 }
